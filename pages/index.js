@@ -45,10 +45,9 @@ export default function Home() {
     }
   }
   useEffect(() => {
-    const token = getKpMerchantToken();
-    if (token) {
-      setIsLogin(true);
+    if (localStorage.getItem('SANDBOXKWIKSESSIONTOKEN') !== null) {
       setStep(3);
+      setIsLogin(true)
     }
     //   console.log('use effect');
     //   const handleCustomEvent = (event) => {
