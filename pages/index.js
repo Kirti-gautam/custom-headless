@@ -24,8 +24,8 @@ export default function Home() {
       // Simulate OTP verification
       const verifyOTPResponse = await loginFunctions.kpVerifyOTP({phone: formData.phone, otp: parseInt(formData.otp,10)});
             if(verifyOTPResponse.status == 200) {
-              alert("User logged in successfully")
               setIsLogin(true)
+              alert("User logged in successfully")
             }else{
                 alert(verifyOTPResponse?.message)
             }
@@ -74,7 +74,7 @@ export default function Home() {
       <h1 className={styles.heading}>Custom store in NextJS with headless integration</h1>
 
       <main className={`${styles.main} ${inter.className}`}>
-        {!isLogin ? <h1>You are logged in</h1> :
+        {isLogin ? <h1>You are logged in</h1> :
           <section className={styles.loginSection}>
             {step === 2 && <button className={styles.backButton} onClick={() => setStep(1)}>Go back</button>} <h2>Login</h2>
             <form onSubmit={handleLoginSubmit} className={styles.loginForm}>
