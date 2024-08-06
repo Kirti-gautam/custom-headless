@@ -45,6 +45,11 @@ export default function Home() {
     }
   }
   useEffect(() => {
+    const token = getKpMerchantToken();
+    if (token) {
+      setIsLogin(true);
+      setStep(3);
+    }
     //   console.log('use effect');
     //   const handleCustomEvent = (event) => {
     //     if(event?.detail?.type === 'user-loggedin'){
