@@ -24,11 +24,8 @@ export default function Home() {
       // Simulate OTP verification
       const verifyOTPResponse = await loginFunctions.kpVerifyOTP({phone: formData.phone, otp: parseInt(formData.otp,10)});
             if(verifyOTPResponse.status == 200) {
-                alert("User logged in successfully")
-                modal.style.display = "none";
-                document.getElementById('account').style.display = "inline-block";
-                document.getElementById('logout').style.display = "inline-block";
-                document.getElementById('loginBtn').style.display = "none";
+              alert("User logged in successfully")
+              setIsLogin(true)
             }else{
                 alert(verifyOTPResponse?.message)
             }
@@ -77,14 +74,15 @@ export default function Home() {
       <h1 className={styles.heading}>Custom store in NextJS with headless integration</h1>
 
       <main className={`${styles.main} ${inter.className}`}>
-        <section className={styles.loginSection}>
-        { step===2 && <button className={styles.backButton} onClick={() => setStep(1)}>Go back</button> } <h2>Login</h2>
-          <form onSubmit={handleLoginSubmit} className={styles.loginForm}>
-            {step === 1 && <input type="tel" name="phone" minLength={10} maxLength={10} required value={formData.phone} placeholder="Enter phone number" onChange={(e) => setFormData((prev) => ({...prev, phone: e.target.value}))} className={styles.input} />}
-            {step === 2 && <input type="number" name="otp" value={formData.otp} onChange={(e) => setFormData((prev) => ({...prev, otp: e.target.value}))} minLength={4} maxLength={4} placeholder="Enter OTP number" className={styles.input} />}
-            <button type="submit" className={styles.submitButton}>Submit</button>
-          </form>
-        </section>
+        {!isLogin ? <h1>You are logged in</h1> :
+          <section className={styles.loginSection}>
+            {step === 2 && <button className={styles.backButton} onClick={() => setStep(1)}>Go back</button>} <h2>Login</h2>
+            <form onSubmit={handleLoginSubmit} className={styles.loginForm}>
+              {step === 1 && <input type="tel" name="phone" minLength={10} maxLength={10} required value={formData.phone} placeholder="Enter phone number" onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))} className={styles.input} />}
+              {step === 2 && <input type="number" name="otp" value={formData.otp} onChange={(e) => setFormData((prev) => ({ ...prev, otp: e.target.value }))} minLength={4} maxLength={4} placeholder="Enter OTP number" className={styles.input} />}
+              <button type="submit" className={styles.submitButton}>Submit</button>
+            </form>
+          </section>}
       </main>
     </>
   )
