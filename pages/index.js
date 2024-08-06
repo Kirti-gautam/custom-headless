@@ -2,10 +2,11 @@ import Head from 'next/head'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import { useState, useEffect, useRef } from 'react'
+import KwikpassSSOButton from './components/KwikpassSSOButton'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+export default function Home() {  
   const [step, setStep] = useState(1)
   const [isLogin, setIsLogin] = useState(false)
   const [formData, setFormData] = useState({})
@@ -17,41 +18,50 @@ export default function Home() {
       const sendOTPResponse = await loginFunctions.kpSendOTP(formData.phone)
       if(sendOTPResponse?.status == 200) {               
         setStep(2);
-      }else{
+      } else {
           alert(`Error: ${sendOTPResponse}`)
       }      
     } else {
       // Simulate OTP verification
       const verifyOTPResponse = await loginFunctions.kpVerifyOTP({phone: formData.phone, otp: parseInt(formData.otp,10)});
             if(verifyOTPResponse.status == 200) {
+              console.log("User logged in successfully");
+              setStep(3);
               setIsLogin(true)
-              alert("User logged in successfully")
-            }else{
+            } else {
                 alert(verifyOTPResponse?.message)
             }
     }
 
   }
-
-  const handleLogout = () => {
-    console.log("handleLogout");
+  const handleLogout = () => {    
     loginFunctions.handleKPLogout();
-    window.location.reload();
   }
-
+  const getKpMerchantToken = async () => {
+    const token = await loginFunctions.kpCustomMerchantLogin();
+    if (token) {
+      // do something
+      console.log(token);
+    }
+  }
   useEffect(() => {
-    const autoLogin = (event) => {
-      alert("user-loggedin event fired");
-      const token = event.detail;
-      if (token) {
-        setIsLogin(true);
-      }
-    }
-    window.addEventListener("user-loggedin", autoLogin)
-    return () => {
-      window.removeEventListener("user-loggedin", autoLogin)
-    }
-  })
+    //   console.log('use effect');
+    //   const handleCustomEvent = (event) => {
+    //     if(event?.detail?.type === 'user-loggedin'){
+    //         setStep(3);
+    //         setIsLogin(true) 
+    //     } else if(event?.detail?.type === 'user-logout'){
+    //         setStep(1);
+    //         setIsLogin(false) 
+    //     }
+    //     console.log('user-loggedin event fired', event);  
+
+    //   }
+    //  window.addEventListener("kp-custom-merchant", handleCustomEvent)
+    //   return () => {
+    //     console.log('Cleanup function called');
+    //   };
+  }, []);
 
   return (
     <>
@@ -65,24 +75,23 @@ export default function Home() {
       <header className={styles.header}>
         <div className={styles.logo}>Kwikpass</div>
         <nav className={styles.nav}>
-          {isLogin ? <><button className={styles.button} id="account">Account</button>
-          <button className={styles.button} id="logout" onClick={handleLogout}>Logout</button></> : <button className={styles.button} id="login" >Login</button> }
-          
-          
+          {isLogin ? <><button className={styles.button} onClick={getKpMerchantToken}>SSO Login</button> <button className={styles.button} id="account">Account</button>
+            <button className={styles.button} id="logout" onClick={handleLogout}>Logout</button></> : <button className={styles.button} id="login" >Login</button>}   
         </nav>
       </header>
       <h1 className={styles.heading}>Custom store in NextJS with headless integration</h1>
-
       <main className={`${styles.main} ${inter.className}`}>
-        {isLogin ? <h1>You are logged in</h1> :
+        {step === 3 ? <h2>You're Loggedin Now...</h2> :
           <section className={styles.loginSection}>
             {step === 2 && <button className={styles.backButton} onClick={() => setStep(1)}>Go back</button>} <h2>Login</h2>
             <form onSubmit={handleLoginSubmit} className={styles.loginForm}>
               {step === 1 && <input type="tel" name="phone" minLength={10} maxLength={10} required value={formData.phone} placeholder="Enter phone number" onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))} className={styles.input} />}
               {step === 2 && <input type="number" name="otp" value={formData.otp} onChange={(e) => setFormData((prev) => ({ ...prev, otp: e.target.value }))} minLength={4} maxLength={4} placeholder="Enter OTP number" className={styles.input} />}
               <button type="submit" className={styles.submitButton}>Submit</button>
+              <KwikpassSSOButton title={'sso-login'} status={false} />
             </form>
-          </section>}
+          </section>
+        }
       </main>
     </>
   )
