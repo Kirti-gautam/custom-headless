@@ -22,7 +22,10 @@ export default function Document() {
         />
         <Script
           src="https://sandbox.pdp.gokwik.co/kwikpass/plugin/build/kp-custom-merchant-v2.js"
-          strategy="afterInteractive"
+          onLoad={() => {
+            console.log("kp script loaded");
+            window.dispatchEvent(new Event("kp_script_loaded"));
+          }}
         />
       </body>
     </Html>

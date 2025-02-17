@@ -51,26 +51,10 @@ export default function Home() {
       setStep(3);
       setIsLogin(true);
     }
-    //   console.log('use effect');
-    //   const handleCustomEvent = (event) => {
-    //     if(event?.detail?.type === 'user-loggedin'){
-    //         setStep(3);
-    //         setIsLogin(true)
-    //     } else if(event?.detail?.type === 'user-logout'){
-    //         setStep(1);
-    //         setIsLogin(false)
-    //     }
-    //     console.log('user-loggedin event fired', event);
-
-    //   }
-    //  window.addEventListener("kp-custom-merchant", handleCustomEvent)
-    //   return () => {
-    //     console.log('Cleanup function called');
-    //   };
   }, []);
 
   useEffect(() => {
-    console.log("use effect -> send page view event");
+    console.log("inside use effect -> send page view event", window.__KP_LOGIN_SDK_INSTANCE__);
     const collectionPageViewEvent = new CustomEvent("page_view_kp", {
       detail: {
         type: "collection",
