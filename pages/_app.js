@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }) {
           "https://d20ce51t0ju3pt.cloudfront.net/images/single-product-images/fast-up-fusion-tech-protein-elevate-clinically-tested-for-2x-faster-absorption-1-1528_1692704801.webp",
       },
     });
-  }, []);
+  }, [router.pathname]);
 
   return (
     <>
