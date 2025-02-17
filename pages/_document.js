@@ -1,5 +1,5 @@
-import { Html, Head, Main, NextScript } from 'next/document'
-import Script from 'next/script'
+import { Html, Head, Main, NextScript } from "next/document";
+import Script from "next/script";
 
 export default function Document() {
   return (
@@ -8,19 +8,23 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        <Script strategy='afterInteractive'
+        <Script
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.merchantInfo = {
-                environment: "dev",
-                mid: "19g6iljvsb34d",
+                environment: "sandbox",
+                mid: "19mdug4trxwh",
                 type: "merchantInfo"
               };
             `,
           }}
         />
-        <Script src="https://dev.pdp.gokwik.co/kwikpass/plugin/build/kp-custom-merchant.js" strategy='afterInteractive' />
+        <Script
+          src="https://sandbox.pdp.gokwik.co/kwikpass/plugin/build/kp-custom-merchant-v2.js"
+          strategy="afterInteractive"
+        />
       </body>
     </Html>
-  )
+  );
 }
