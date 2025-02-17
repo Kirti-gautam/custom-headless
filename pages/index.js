@@ -81,6 +81,12 @@ export default function Home() {
               Login
             </button>
           )}
+          <Link href="/about" className={styles.button}>
+            About
+          </Link>
+          <Link href="/product" className={styles.button}>
+            Product
+          </Link>
         </nav>
       </header>
       <h1 className={styles.heading}>Custom store in NextJS with headless integration</h1>
