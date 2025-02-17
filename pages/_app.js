@@ -1,10 +1,13 @@
 import "@/styles/globals.css";
 import Script from "next/script";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 export default function App({ Component, pageProps }) {
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
+  const router = useRouter();
+
   useEffect(() => {
-    if (isScriptLoaded) {
+    if (isScriptLoaded && typeof window !== "undefined") {
       console.log(
         "inside use effect -> send page view event -> app.js",
         window.__KP_LOGIN_SDK_INSTANCE__
@@ -13,7 +16,7 @@ export default function App({ Component, pageProps }) {
         detail: {
           type: "collection",
           data: {
-            handle: `${window.location.pathname}`,
+            handle: `${router.pathname}`,
             name: "product-category",
             collection_id: "45678765456",
             img_url:
@@ -24,7 +27,7 @@ export default function App({ Component, pageProps }) {
 
       window.dispatchEvent(collectionPageViewEvent);
     }
-  }, [isScriptLoaded, window.location.pathname]);
+  }, [isScriptLoaded, router.pathname]);
 
   return (
     <>
