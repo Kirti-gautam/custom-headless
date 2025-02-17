@@ -7,7 +7,7 @@ export default function App({ Component, pageProps }) {
   const router = useRouter();
 
   useEffect(() => {
-    window.__KP_LOGIN_SDK_INSTANCE__.logEvents({
+    window.kpqueue.push({
       type: "collection",
       data: {
         handle: `${router.pathname}`,
@@ -25,7 +25,9 @@ export default function App({ Component, pageProps }) {
         dangerouslySetInnerHTML={{
           __html: `
             (function () {
+              window.__KP_LOGIN_SDK_INSTANCE__ = window.__KP_LOGIN_SDK_INSTANCE__ || {};
               window.__KP_LOGIN_SDK_INSTANCE__.logEvents = window.__KP_LOGIN_SDK_INSTANCE__.logEvents || function(event){
+                window.kpqueue = window.kpqueue || [];
                 window.kpqueue.push(event);
               };
               var s = document.createElement('script');
