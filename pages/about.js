@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 const About = () => {
   useEffect(() => {
-    console.log("use effect -> send page view event");
+    console.log("inside useEffect -> send page view event");
     const collectionPageViewEvent = new CustomEvent("page_view_kp", {
       detail: {
         type: "collection",
