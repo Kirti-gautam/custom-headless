@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import Script from "next/script";
+import { useState, useEffect } from "react";
 export default function App({ Component, pageProps }) {
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   useEffect(() => {
