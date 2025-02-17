@@ -53,24 +53,6 @@ export default function Home() {
     }
   }, []);
 
-  useEffect(() => {
-    console.log("inside use effect -> send page view event", window.__KP_LOGIN_SDK_INSTANCE__);
-    const collectionPageViewEvent = new CustomEvent("page_view_kp", {
-      detail: {
-        type: "collection",
-        data: {
-          collection_handle: "product-category",
-          collection_name: "product-category",
-          collection_id: "45678765456",
-          img_url:
-            "https://d20ce51t0ju3pt.cloudfront.net/images/single-product-images/fast-up-fusion-tech-protein-elevate-clinically-tested-for-2x-faster-absorption-1-1528_1692704801.webp",
-        },
-      },
-    });
-
-    window.dispatchEvent(collectionPageViewEvent);
-  }, []);
-
   return (
     <>
       <Head>
