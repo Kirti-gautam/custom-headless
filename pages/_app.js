@@ -7,7 +7,7 @@ export default function App({ Component, pageProps }) {
   const router = useRouter();
 
   useEffect(() => {
-    window.kpqueue.push({
+    window.__KP_LOGIN_SDK_INSTANCE__.logEvents({
       type: "collection",
       data: {
         handle: `${router.pathname}`,
