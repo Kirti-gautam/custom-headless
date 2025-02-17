@@ -13,8 +13,8 @@ export default function App({ Component, pageProps }) {
         detail: {
           type: "collection",
           data: {
-            collection_handle: "product-category",
-            collection_name: "product-category",
+            handle: `${window.location.pathname}`,
+            name: "product-category",
             collection_id: "45678765456",
             img_url:
               "https://d20ce51t0ju3pt.cloudfront.net/images/single-product-images/fast-up-fusion-tech-protein-elevate-clinically-tested-for-2x-faster-absorption-1-1528_1692704801.webp",
@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }) {
 
       window.dispatchEvent(collectionPageViewEvent);
     }
-  }, [isScriptLoaded]);
+  }, [isScriptLoaded, window.location.pathname]);
 
   return (
     <>
