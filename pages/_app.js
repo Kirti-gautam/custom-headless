@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }) {
               var s = document.createElement('script');
               s.type = 'text/javascript';
               s.defer = true;
-              s.src = 'http://sandbox.pdp.gokwik.co/kwikpass/plugin/build/kp-custom-merchant.js';
+              s.src = 'https://sandbox.pdp.gokwik.co/kwikpass/plugin/build/kp-custom-merchant.js';
               var x = document.getElementsByTagName('script')[0];
               x.parentNode.insertBefore(s, x);
             })();
